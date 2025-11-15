@@ -5,6 +5,7 @@
 # HW 5 Hash Table
 
 import csv
+import time
 
 class DataItem:
     def __init__(self, line):
@@ -23,22 +24,41 @@ def hashFunction(stringData):
     key = len(stringData) + 67
 
     return key
-# create empty hash table
-size = 20000
-hashTitleTable = [None] * size
 
-hashQuoteTable = [None] * size
+def openFile(file):
+    data = []
+    with open(file, 'r', newline = '', encoding = "utf8") as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader)
+        for row in reader:
+            data.append(row)
+    return data
 
-file = "MOCK_DATA.csv"
-counter = 0
+def main():
+    # create empty hash table
+    size = 15068
+    hashTitleTable = [None] * size
 
-with open(file, 'r', newline = '', encoding = "utf8") as csvfile:
-    reader = csv.reader(csvfile)
-    next(reader)
+    hashQuoteTable = [None] * size
+
+    collisions = 0
+    unusedSpace = 0
+
+    movieNames = []
+    counter = 0
+
+    file = "MOCK_DATA.csv"
+    reader = openFile(file)
+
+    #TIME STATISTIC
+    start = time.time()
     for row in reader:
+        placed = False
         # create a DataItem from row
         movie = DataItem(row)
+        movieNames.append(movie.movie_name)
         #print(movie.movie_name)
+        #print(row[0])
 
         # feed the appropriate field into the hash function to get a key
         titleKey = hashFunction(movie.movie_name)
@@ -46,8 +66,30 @@ with open(file, 'r', newline = '', encoding = "utf8") as csvfile:
         # mod the key value by the hash table length
         loc = titleKey % len(hashTitleTable)
         # try to insert DataItem into hash table
-        hashTitleTable[loc] = movie.movie_name
+        while placed != True:
+            if hashTitleTable[loc] == None:
+                #print(movie.movie_name + " " + str(loc))
+                hashTitleTable[loc] = movie.movie_name
+                placed = True
+            else:
+                # If this code runs then there was a collision, can track number of collisions with this 
+                collisions += 1
+                loc += 1
+        
+                
         # handle any collisions 
-        counter += 1
 
-print(counter)
+    end = time.time()
+    print(f"{end-start:0.2f} seconds")
+    print(f"number of collisions = {collisions}")
+    #print(hashTitleTable[0:1000])
+    #print(hashTitleTable)
+    for titles in hashTitleTable:
+        if titles == None:
+            unusedSpace += 1
+    print(f"Unused Space = {unusedSpace}")
+
+
+
+if __name__ == "__main__":
+    main()
