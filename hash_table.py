@@ -49,9 +49,19 @@ def hashFunction2(stringData):
 
     return key 
 
+def hashFunction3(stringData):
+    # do things to stringData, turn it into int
+    key  = 0
+    length = len(stringData)
+    for char in stringData:
+        # takes the unicode for each char to make the key
+        key += ord(char)
+
+    return key * length
+
 def main():
     # create empty hash table
-    size = 15068
+    size = 15073
     hashTitleTable = [None] * size
 
     hashQuoteTable = [None] * size
@@ -68,7 +78,6 @@ def main():
     #TIME STATISTIC
     start = time.time()
     for row in reader:
-        placed = False
         # create a DataItem from row
         movie = DataItem(row)
         #movieNames.append(movie.movie_name)
@@ -76,26 +85,26 @@ def main():
         #print(row[0])
 
         # feed the appropriate field into the hash function to get a key
-        titleKey = hashFunction2(movie.movie_name)
+        titleKey = hashFunction3(movie.movie_name)
         #quoteKey = hashFunction2(movie.quote)
 
         # mod the key value by the hash table length
-        loc = titleKey % len(hashTitleTable)
-        #loc = quoteKey % len(hashQuoteTable)
+        loc = titleKey % size
+        #loc = quoteKey % size
 
         # try to insert DataItem into hash table
-        while placed != True:
-            if hashTitleTable[loc] == None:
+        while True:
+            if hashTitleTable[loc] is None:
                 #print(movie.movie_name + " " + str(loc))
                 hashTitleTable[loc] = movie.movie_name
-                placed = True
+                break
             #if hashQuoteTable[loc] == None:
             #    hashQuoteTable[loc] = movie.quote
             #    placed = True
-            else:
-                # If this code runs then there was a collision, can track number of collisions with this 
-                collisions += 1
-                loc = (loc + 1) % size
+
+            # If this code runs then there was a collision, can track number of collisions with this 
+            collisions += 1
+            loc = (loc + 1) % size
         
                 
         # handle any collisions 
