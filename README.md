@@ -12,3 +12,4 @@ Hash Function 4:
 
 Hash Function 5:
     This Function takes the length of stringData, multiplies it by two, and adds key for each char in stringData (loops it). The runtime for title was 9.98 seconds and quote was 9.19 seconds. The total collisions for title was around 94 million and quote was around 91.3 million with both having 73 unused space.
+
