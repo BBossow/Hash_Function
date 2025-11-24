@@ -28,18 +28,16 @@ def openFile(file):
             data.append(row)
     return data
 
-#first Hash Function
-#number of collisions = 112194921
-# time = 18
+# First Hash Function
+
 def hashFunction(stringData):
     # takes the length of string data and adds 67
     key = len(stringData) + 67
 
     return key
 
-#second Hash function
-# number of collisions = 87842862
-# time = 12.07
+# Second Hash function
+
 def hashFunction2(stringData):
     # takes the unicode for each char in string data and adds them together
     key  = 0
@@ -49,13 +47,27 @@ def hashFunction2(stringData):
 
     return key 
 
+# Third Hash Function
+
 def hashFunction3(stringData):
-    # takes the unicode for each char in string data, adds them together, then multiplies the total by length of string data
+    # takes the unicode for each char in string data, multiplies by a set number, then adds key
     key  = 0
     num = 31
     for char in stringData:
         # takes the unicode for each char to make the key
         key = ord(char) * num + key
+
+    return key 
+
+# Fourth Hash Function
+
+def hashFunction4(stringData):
+    # takes the size of the table and floor divides by the unicode for each char in string data, adds them together, then adds key
+    key  = 0
+    size = 15073
+    for char in stringData:
+        # takes the unicode for each char to make the key
+        key = (size // ord(char)) + key
 
     return key 
 
@@ -81,7 +93,7 @@ def main():
         movie = DataItem(row)
 
         # feed the appropriate field into the hash function to get a key
-        titleKey = hashFunction3(movie.movie_name)
+        titleKey = hashFunction4(movie.movie_name)
 
         # mod the key value by the hash table length
         loc = titleKey % size
@@ -122,7 +134,7 @@ def main():
         movie = DataItem(row)
 
         # feed the appropriate field into the hash function to get a key
-        quoteKey = hashFunction3(movie.quote)
+        quoteKey = hashFunction4(movie.quote)
 
         # mod the key value by the hash table length
         loc = quoteKey % size
