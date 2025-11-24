@@ -11,3 +11,4 @@ Hash Function 4:
     This Function takes the set size of the Hash Tables and floor divides it by the unicode for each char and adds key. This was more efficent than the first two, but not as good as the third. The runtime for the Title table was 6.35 seconds and the time for the Quote table was 8.84 seconds. The collision counter for Title was around 60 million and Quote was around 84 million with both having 73 unused space.
 
 Hash Function 5:
+    This Function takes the length of stringData, multiplies it by two, and adds key for each char in stringData (loops it). The runtime for title was 9.98 seconds and quote was 9.19 seconds. The total collisions for title was around 94 million and quote was around 91.3 million with both having 73 unused space.

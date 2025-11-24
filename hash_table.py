@@ -71,6 +71,17 @@ def hashFunction4(stringData):
 
     return key 
 
+# Fifth Hash Function
+
+def hashFunction5(stringData):
+    # takes the length of stringData, multiplied by 2, and adds key for each char in stringData
+    length = len(stringData)
+    key  = 0
+    for char in stringData:
+        key = (length * 2) + key
+
+    return key 
+
 def main():
     # create empty hash table's
     size = 15073
@@ -93,7 +104,7 @@ def main():
         movie = DataItem(row)
 
         # feed the appropriate field into the hash function to get a key
-        titleKey = hashFunction4(movie.movie_name)
+        titleKey = hashFunction5(movie.movie_name)
 
         # mod the key value by the hash table length
         loc = titleKey % size
@@ -107,9 +118,6 @@ def main():
             # If this code runs then there was a collision, can track number of collisions with this 
             collisions += 1
             loc = (loc + 1) % size
-        
-                
-        # handle any collisions 
 
     end = time.time()
     print("Title Hash Table")
@@ -134,7 +142,7 @@ def main():
         movie = DataItem(row)
 
         # feed the appropriate field into the hash function to get a key
-        quoteKey = hashFunction4(movie.quote)
+        quoteKey = hashFunction5(movie.quote)
 
         # mod the key value by the hash table length
         loc = quoteKey % size
