@@ -52,12 +52,12 @@ def hashFunction2(stringData):
 def hashFunction3(stringData):
     # takes the unicode for each char in string data, adds them together, then multiplies the total by length of string data
     key  = 0
-    length = len(stringData)
+    num = 31
     for char in stringData:
         # takes the unicode for each char to make the key
-        key += ord(char)
+        key = ord(char) * num + key
 
-    return key * length
+    return key 
 
 def main():
     # create empty hash table's
@@ -122,7 +122,7 @@ def main():
         movie = DataItem(row)
 
         # feed the appropriate field into the hash function to get a key
-        quoteKey = hashFunction2(movie.quote)
+        quoteKey = hashFunction3(movie.quote)
 
         # mod the key value by the hash table length
         loc = quoteKey % size
