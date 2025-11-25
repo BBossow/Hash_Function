@@ -104,7 +104,7 @@ def main():
         movie = DataItem(row)
 
         # feed the appropriate field into the hash function to get a key
-        titleKey = hashFunction5(movie.movie_name)
+        titleKey = hashFunction3(movie.movie_name)
 
         # mod the key value by the hash table length
         loc = titleKey % size
@@ -113,7 +113,7 @@ def main():
         while True:
             if hashTitleTable[loc] is None:
                 #print(movie.movie_name + " " + str(loc))
-                hashTitleTable[loc] = movie.movie_name
+                hashTitleTable[loc] = movie
                 break
             # If this code runs then there was a collision, can track number of collisions with this 
             collisions += 1
@@ -126,7 +126,7 @@ def main():
     print(f"number of collisions = {collisions}")
     
     for titles in hashTitleTable: # hashTitleTable  hashQuoteTable
-        if titles == None:
+        if titles is None:
             unusedSpace += 1
     print(f"Unused Space = {unusedSpace}\n")
 
@@ -142,7 +142,7 @@ def main():
         movie = DataItem(row)
 
         # feed the appropriate field into the hash function to get a key
-        quoteKey = hashFunction5(movie.quote)
+        quoteKey = hashFunction3(movie.quote)
 
         # mod the key value by the hash table length
         loc = quoteKey % size
@@ -150,7 +150,7 @@ def main():
         # try to insert DataItem into hash table
         while True:
             if hashQuoteTable[loc] is None:
-                hashQuoteTable[loc] = movie.quote
+                hashQuoteTable[loc] = movie
                 break
             # If this code runs then there was a collision, can track number of collisions with this 
             collisions += 1
@@ -162,11 +162,9 @@ def main():
     print(f"number of collisions = {collisions}")
     
     for titles in hashQuoteTable:
-        if titles == None:
+        if titles is None:
             unusedSpace += 1
     print(f"Unused Space = {unusedSpace}")
-
-
 
 if __name__ == "__main__":
     main()
